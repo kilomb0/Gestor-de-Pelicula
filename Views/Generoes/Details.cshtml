@@ -1,0 +1,27 @@
+﻿@model CineProyecto.Models.Genero
+
+@{
+    ViewBag.Title = "Detalles del Género";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center my-4">Detalles del Género</h2>
+
+<div class="container">
+    <div>
+        <h4>Género</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-md-2">
+                Nombre del Genero
+            </dt>
+            <dd class="col-md-10">
+                @Html.DisplayFor(model => model.NombreGenero)
+            </dd>
+        </dl>
+    </div>
+    <div class="mt-3">
+        @Html.ActionLink("Editar", "Edit", new { id = Model.IdGenero }, new { @class = "btn btn-primary mr-2" })
+        @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-secondary" })
+    </div>
+</div>

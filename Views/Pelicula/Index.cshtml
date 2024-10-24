@@ -1,0 +1,170 @@
+﻿@model IEnumerable<CineProyecto.Models.Pelicula>
+
+@{
+    ViewBag.Title = "Lista de Películas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* estilos para peliculas destacadas */
+    .carousel-container {
+        position: relative;
+        width: 100%;
+        max-width: 1024px;
+        margin: auto;
+        overflow: hidden;
+    }
+
+    .carousel-slide {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .highlighted-movies {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        will-change: transform;
+    }
+
+    .highlighted-movie {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s;
+        width: 200px;
+        text-align: center;
+        margin: 0 0.5rem;
+    }
+
+        .highlighted-movie:hover {
+            transform: scale(1.05);
+        }
+
+        .highlighted-movie img {
+            width: 100%;
+            height: auto;
+        }
+
+        .highlighted-movie p {
+            margin: 0;
+            padding: 0.5rem;
+            background-color: #343a40;
+            color: white;
+            font-weight: bold;
+        }
+
+    .carousel-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0,0,0,0.5);
+        color: white;
+        border: none;
+        padding: 1rem;
+        cursor: pointer;
+        z-index: 1;
+    }
+
+        .carousel-button.prev {
+            left: 0;
+        }
+
+        .carousel-button.next {
+            right: 0;
+        }
+</style>
+
+<div class="container">
+    <!-- Sección de Películas Destacadas -->
+    <section class="carousel-container">
+        <h3 class="text-center mb-4 w-100">Peliculas</h3>
+        <button class="carousel-button prev" onclick="prevSlide()">&#10094;</button>
+        <div class="carousel-slide">
+            <div class="highlighted-movies">
+                @foreach (var item in Model)
+                {
+                    string url = item.UrlPoster.ToString();
+                    <div class="highlighted-movie">
+                        <img src="@url" alt="Película 1">
+                        <p>@item.NombrePelicula.ToString()</p>
+                    </div>
+                }
+            </div>
+        </div>
+        <button class="carousel-button next" onclick="nextSlide()">&#10095;</button>
+    </section>
+
+    <h2>Lista de Películas</h2>
+    <p>
+        @Html.ActionLink("Agregar Película", "Create", null, new { @class = "btn btn-primary mb-3" })
+    </p>
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    Nombre de la Película
+                </th>
+                <th>
+                    Año
+                </th>
+                <th>
+                    Tipo de Genero
+                </th>
+                <th class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NombrePelicula)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Anho)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Genero.NombreGenero)
+                    </td>
+                    <td class="text-center">
+                        @Html.ActionLink("Editar", "Edit", new { id = item.IdPelicula }, new { @class = "btn btn-sm btn-warning mr-1" })
+                        @Html.ActionLink("Detalles", "Details", new { id = item.IdPelicula }, new { @class = "btn btn-sm btn-info mr-1" })
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.IdPelicula }, new { @class = "btn btn-sm btn-danger" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    let currentIndex = 0;
+
+    function updateSlide() {
+        const slide = document.querySelector('.carousel-slide');
+        const slideWidth = document.querySelector('.highlighted-movie').offsetWidth;
+        const gap = parseFloat(window.getComputedStyle(document.querySelector('.highlighted-movie')).marginRight);
+        slide.style.transform = `translateX(${-currentIndex * (slideWidth + gap)}px)`;
+    }
+
+    function nextSlide() {
+        const totalSlides = document.querySelectorAll('.highlighted-movie').length;
+        if (currentIndex < totalSlides - 5) { // Ajustar el número 5 según cuántos quieres mostrar a la vez
+            currentIndex++;
+        } else {
+            currentIndex = 0; // Volver al inicio
+        }
+        updateSlide();
+    }
+
+    function prevSlide() {
+        const totalSlides = document.querySelectorAll('.highlighted-movie').length;
+        if (currentIndex > 0) {
+            currentIndex--;
+        } else {
+            currentIndex = totalSlides - 5; // Ajustar el número 5 según cuántos quieres mostrar a la vez
+        }
+        updateSlide();
+    }
+
+</script>

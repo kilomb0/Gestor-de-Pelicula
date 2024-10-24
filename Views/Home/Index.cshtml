@@ -1,0 +1,248 @@
+﻿
+@model IEnumerable<CineProyecto.Models.Pelicula>
+@{
+    ViewBag.Title = "Inicio";
+}
+
+<style>
+    /* el titulo */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa;
+        color: #343a40;
+    }
+
+    main {
+        padding-top: 50px;
+    }
+
+    h1#title {
+        font-size: 2.5rem;
+        font-weight: bold;
+    }
+
+    .lead {
+        font-size: 1.25rem;
+        font-weight: 300;
+    }
+
+    /* cuadritos */
+    .card {
+        border: none;
+        border-radius: 10px;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+    .card-body h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+    .btn-outline-primary {
+        color: #007bff;
+        border-color: #007bff;
+    }
+
+        .btn-outline-primary:hover {
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+    .mt-5 {
+        margin-top: 3rem !important;
+    }
+
+    .mt-3 {
+        margin-top: 1rem !important;
+    }
+
+    .shadow-sm {
+        box-shadow: 0 .125rem .25rem rgba(0, 0, 0, 0.075) !important;
+    }
+    /* estilos para peliculas destacadas */
+    .carousel-container {
+        position: relative;
+        width: 100%;
+        max-width: 1024px;
+        margin: auto;
+        overflow: hidden;
+    }
+
+    .carousel-slide {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .highlighted-movies {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        will-change: transform;
+    }
+
+    .highlighted-movie {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: transform 0.3s;
+        width: 200px;
+        text-align: center;
+        margin: 0 0.5rem;
+    }
+
+        .highlighted-movie:hover {
+            transform: scale(1.05);
+        }
+
+        .highlighted-movie img {
+            width: 100%;
+            height: auto;
+        }
+
+        .highlighted-movie p {
+            margin: 0;
+            padding: 0.5rem;
+            background-color: #343a40;
+            color: white;
+            font-weight: bold;
+        }
+
+    .carousel-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0,0,0,0.5);
+        color: white;
+        border: none;
+        padding: 1rem;
+        cursor: pointer;
+        z-index: 1;
+    }
+
+        .carousel-button.prev {
+            left: 0;
+        }
+
+        .carousel-button.next {
+            right: 0;
+        }
+</style>
+
+
+<main class="container mt-5">
+    <section class="row" aria-labelledby="aspnetTitle">
+        <div class="col-12 text-center">
+            <h1 id="title" class="display-5">Cine Kokue</h1>
+            <p class="lead">Tu destino para disfrutar del séptimo arte en todo su esplendor. Explora nuestras películas en cartelera, reserva tus entradas con facilidad y vive la magia del cine con nosotros.</p>
+        </div>
+    </section>
+
+    <!-- Sección de Películas Destacadas -->
+    <section class="carousel-container">
+        <h3 class="text-center mb-4 w-100">Películas Destacadas</h3>
+        <button class="carousel-button prev" onclick="prevSlide()">&#10094;</button>
+        <div class="carousel-slide">
+            <div class="highlighted-movies">
+                @foreach (var item in Model)
+                {
+                    string url = item.UrlPoster.ToString();
+                    <div class="highlighted-movie">
+                        <img src="@url" alt="Película 1">
+                        <p>@item.NombrePelicula.ToString()</p>
+                    </div>
+                }
+            </div>
+        </div>
+        <button class="carousel-button next" onclick="nextSlide()">&#10095;</button>
+    </section>
+
+
+    <div class="text-center mb-5">
+        <a href="@Url.Action("Index", "Pelicula")" class="btn btn-primary btn-lg mt-3">Ir a Lista de Películas &raquo;</a>
+    </div>
+
+    <div class="row mt-5">
+        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 id="gettingStartedTitle" class="h5">Géneros</h2>
+                    <p>
+                        Descubre una amplia variedad de géneros cinematográficos en Cine Kokue, desde emocionantes thrillers y románticas comedias hasta épicas de ciencia ficción y cautivadores dramas. Encuentra tu película perfecta entre nuestras distintas categorías y sumérgete en experiencias cinematográficas únicas que se adaptan a todos los gustos y preferencias.
+                    </p>
+                    <a href="@Url.Action("Index", "Generoes")" class="btn btn-outline-primary btn-md">Lista de Géneros &raquo;</a>
+                </div>
+            </div>
+        </section>
+        <section class="col-md-4" aria-labelledby="librariesTitle">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 id="librariesTitle" class="h5">Horarios</h2>
+                    <p>
+                        Consulta los horarios de proyección actualizados en Cine Kokue y planifica tu próxima visita al cine con facilidad. Desde matinés hasta funciones nocturnas, encuentra el horario que mejor se adapte a tu agenda y disfruta de la mejor selección de películas en la pantalla grande. ¡Tu experiencia cinematográfica empieza aquí!
+                    </p>
+                    <a href="@Url.Action("Index", "Horario")" class="btn btn-outline-primary btn-md">Horario &raquo;</a>
+                </div>
+            </div>
+        </section>
+        <section class="col-md-4" aria-labelledby="hostingTitle">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 id="hostingTitle" class="h5">Reserva</h2>
+                    <p>
+                        Reserva tus entradas de manera rápida y sencilla en Cine Kokue. Explora nuestra amplia cartelera, selecciona la película, el horario y la sala que prefieras, y asegura tu lugar para disfrutar del cine. Con nuestra plataforma de reservas online, garantizamos que tu experiencia sea cómoda y sin complicaciones. ¡Prepárate para vivir el cine como nunca antes!
+                    </p>
+                    <a href="@Url.Action("Index", "Reserva")" class="btn btn-outline-primary btn-md">Reserva &raquo;</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<!-- javasrip para el corrucel de las peliculas -->
+<script>
+    let currentIndex = 0;
+
+    function updateSlide() {
+        const slide = document.querySelector('.carousel-slide');
+        const slideWidth = document.querySelector('.highlighted-movie').offsetWidth;
+        const gap = parseFloat(window.getComputedStyle(document.querySelector('.highlighted-movie')).marginRight);
+        slide.style.transform = `translateX(${-currentIndex * (slideWidth + gap)}px)`;
+    }
+
+    function nextSlide() {
+        const totalSlides = document.querySelectorAll('.highlighted-movie').length;
+        if (currentIndex < totalSlides - 5) { // Ajustar el número 5 según cuántos quieres mostrar a la vez
+            currentIndex++;
+        } else {
+            currentIndex = 0; // Volver al inicio
+        }
+        updateSlide();
+    }
+
+    function prevSlide() {
+        const totalSlides = document.querySelectorAll('.highlighted-movie').length;
+        if (currentIndex > 0) {
+            currentIndex--;
+        } else {
+            currentIndex = totalSlides - 5; // Ajustar el número 5 según cuántos quieres mostrar a la vez
+        }
+        updateSlide();
+    }
+
+</script>

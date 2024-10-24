@@ -1,0 +1,39 @@
+﻿@model IEnumerable<CineProyecto.Models.Funcion>
+
+@{
+    ViewBag.Title = "Lista de Funciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center my-4">Lista de Funciones</h2>
+
+<div class="container">
+    <p>
+        @Html.ActionLink("Crear Nueva Función", "Create", null, new { @class = "btn btn-primary mb-3" })
+    </p>
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayName("Tipo de Función")
+                </th>
+                <th class="text-right">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NombreFuncion)
+                    </td>
+                    <td class="text-right">
+                        @Html.ActionLink("Editar", "Edit", new { id = item.IdFuncion }, new { @class = "btn btn-sm btn-warning mx-1" })
+                        @Html.ActionLink("Detalles", "Details", new { id = item.IdFuncion }, new { @class = "btn btn-sm btn-info mx-1" })
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.IdFuncion }, new { @class = "btn btn-sm btn-danger mx-1" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,32 @@
+﻿@model CineProyecto.Models.Pelicula
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center my-4">Eliminar Pelicula</h2>
+
+<h3 class="text-center">¿Estás seguro de que deseas eliminar esta pelicula?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2 text-right">Nombre de la Pelicula:</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.NombrePelicula)</dd>
+
+        <dt class="col-sm-2 text-right">Año:</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Anho)</dd>
+
+        <dt class="col-sm-2 text-right">Tipo de Genero:</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Genero.NombreGenero)</dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+<div class="form-group">
+    <input type="submit" value="Eliminar" class="btn btn-danger" />
+    @Html.ActionLink("Volver a la Lista", "Index", null, new { @class = "btn btn-secondary ml-2" })
+</div>
+    }
+</div>

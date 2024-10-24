@@ -1,0 +1,32 @@
+﻿@model CineProyecto.Models.Horario
+
+@{
+    ViewBag.Title = "Detalles del Horario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center my-4" >Detalles del Horario</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Inicio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Inicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fin)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Fin)
+        </dd>
+    </dl>
+</div>
+
+<div>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdHorario }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-secondary ml-2" })
+</div>

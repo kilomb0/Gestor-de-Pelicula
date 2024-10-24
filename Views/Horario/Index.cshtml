@@ -1,0 +1,43 @@
+﻿@model IEnumerable<CineProyecto.Models.Horario>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center my-4">Horario</h2>
+
+<p>
+    @Html.ActionLink("Crear Nuevo", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Inicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fin)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Inicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fin)
+                </td>
+                <td class="text-right">
+                    @Html.ActionLink("Editar", "Edit", new { id = item.IdHorario }, new { @class = "btn btn-sm btn-warning mx-1" })
+                    @Html.ActionLink("Detalles", "Details", new { id = item.IdHorario }, new { @class = "btn btn-sm btn-info mx-1" })
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.IdHorario }, new { @class = "btn btn-sm btn-danger mx-1" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
